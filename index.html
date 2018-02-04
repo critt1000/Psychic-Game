@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Psychic Game</title>
+</head>
+
+<body>
+
+  <div id="game">
+      <h1>The Psychic Game</h1>
+    <p>Guess what letter I'm thinking of ?</p>
+    <p>Total Wins: </p>
+    <p>Total Losses: </p>
+    <p>Guesses Left: </p>
+    <p>Your Guesses So Far: </p>
+  </div>
+
+  <script type="text/javascript">
+    // Creates an array of letter choices.
+    var computerChoices = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z'];
+
+    // Global variables
+    var wins = 0;
+    var losses = 0;
+    var guessesRemaining = 9;
+    var guessesMade = [];
+
+
+    // Function for user input through keypresses
+    document.onkeyup = function(event) {
+
+      // Determines keyValue
+      var userGuess = String.fromCharCode(event.keyCode).toLowerCase();
+
+      // computer randomly picks a letter
+      var computerGuess = computerChoices[Math.floor(Math.random() * computerChoices.length)];
+
+      guessesMade.push(userGuess);
+
+      //game logic
+      if (userGuess == computerGuess) {
+        wins++;
+        guessesRemaining = 9; 
+        guessesMade.length = 0;
+    }
+    else if (guessesRemaining == 0){
+        losses++;
+        guessesRemaining = 9;
+        guessesMade.length = 0;
+    }
+    else if (userGuess !== computerGuess){
+        guessesRemaining--; 
+    }  
+        // New variable to remake the html page
+        var html = "<h1>The Psychic Game</h1>" + 
+        "<p>Guess what letter I'm thinking of!</p>" +
+        "<p>Total Wins: " + 
+        wins + 
+        "</p>" +
+        "<p>Total Losses: " + 
+        losses + 
+        "</p>" +
+        "<p>Guesses Left: " + 
+        guessesRemaining + 
+        "</p>" +
+        "<p>Your Guesses So Far: " +
+        guessesMade +
+        "</p>"
+        ;
+
+        // Set the inner HTML contents of the #game div to our html string
+        document.querySelector('#game').innerHTML = html;
+      }
+  </script>
+
+</body>
+
+</html>
